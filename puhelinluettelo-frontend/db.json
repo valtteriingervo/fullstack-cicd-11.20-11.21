@@ -1,0 +1,24 @@
+{
+  "persons": [
+    {
+      "name": "Josefiina Kari",
+      "number": "044-32923102",
+      "id": 2
+    },
+    {
+      "name": "Matti Merikarhu",
+      "number": "050-30023210",
+      "id": 3
+    },
+    {
+      "name": "Petteri Kuuramo",
+      "number": "050-83210823",
+      "id": 4
+    },
+    {
+      "name": "Stas Tutank",
+      "number": "4",
+      "id": 5
+    }
+  ]
+}
