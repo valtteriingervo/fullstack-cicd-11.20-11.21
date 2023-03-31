@@ -3,7 +3,7 @@ name: Own project pipeline
 on:
   push:
     branches:
-      - main
+      - not_a_branch
   pull_request:
     branches: [main]
     types: [opened, synchronize]
