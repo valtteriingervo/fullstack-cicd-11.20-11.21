@@ -44,8 +44,19 @@ jobs:
           checkstring: "ok"
           delay: 3
           rollbackonhealthcheckfailed: true
-      - name: Tag release
-        if: github.event_name == 'push' && !contains(join(github.event.commits.*.message, ','), '#skip')
+
+  tag_release:
+    # Add a new version tag only if the PR is approved and pushed/merged into master
+    # Skip the tagging if the commit message contains "#skip"
+    if: github.event_name == 'push' && !contains(join(github.event.commits.*.message, ','), '#skip')
+    needs: [own_project_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: "0"
+      - name: Bump version and push tag
         uses: anothrNick/github-tag-action@8c8163ef62cf9c4677c8e800f36270af27930f42
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
