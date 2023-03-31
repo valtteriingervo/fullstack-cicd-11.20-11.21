@@ -18,8 +18,6 @@ jobs:
           node-version: "18.15.0"
       - name: Simple Dotenv
         uses: xom9ikk/dotenv@v2.2.0
-        with:
-          path: ../env
       - name: npm install
         run: npm install
       - name: lint
