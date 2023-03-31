@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with: # These are for tagging releases
+          ref: ${{ github.sha }}
+          fetch-depth: "0"
       - uses: actions/setup-node@v3
         with:
           node-version: "18.15.0"
@@ -43,11 +46,6 @@ jobs:
           rollbackonhealthcheckfailed: true
       - name: Tag release
         if: github.event_name == 'push' && !contains(join(github.event.commits.*.message, ','), '#skip')
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.sha }}
-          fetch-depth: "0"
-      - name: Bump version and push tag
         uses: anothrNick/github-tag-action@8c8163ef62cf9c4677c8e800f36270af27930f42
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
