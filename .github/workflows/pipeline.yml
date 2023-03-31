@@ -35,9 +35,20 @@ jobs:
         uses: akhileshns/heroku-deploy@v3.12.13
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "own-app-pipeline" #Must be unique in Heroku
+          heroku_app_name: "own-app-pipeline"
           heroku_email: "valtteri.ingervo@aalto.fi"
           healthcheck: "https://own-app-pipeline.herokuapp.com/health"
           checkstring: "ok"
           delay: 3
           rollbackonhealthcheckfailed: true
+      - name: Tag release
+        if: github.event_name == 'push' && !contains(join(github.event.commits.*.message, ','), '#skip')
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: "0"
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@8c8163ef62cf9c4677c8e800f36270af27930f42
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
