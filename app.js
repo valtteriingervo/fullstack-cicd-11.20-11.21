@@ -25,6 +25,10 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :d
 
 app.use('/api/persons', personRouter)
 
+app.get('/health', (req, res) => {
+  res.send('ok')
+})
+
 // Use this endpoint if none of the app. paths work out
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
